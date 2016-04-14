@@ -21,7 +21,7 @@ import java.util.List;
 /**
  * Created by dansoonie on 4/14/16.
  */
-public class AOAListActivity extends ListActivity {
+public class AoaListActivity extends ListActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,16 +31,16 @@ public class AOAListActivity extends ListActivity {
         setListAdapter(createListAdapter());
     }
 
-    private List<AOAItemInfo> createActivityList() {
-        List<AOAItemInfo> activityList = new ArrayList<>();
+    private List<AoaItemInfo> createActivityList() {
+        List<AoaItemInfo> activityList = new ArrayList<>();
 
         try {
             PackageManager pkgManager = getPackageManager();
             String pkgName = getPackageName();
             PackageInfo pkgInfo = pkgManager.getPackageInfo(pkgName, PackageManager.GET_ACTIVITIES);
             for (ActivityInfo activityInfo : pkgInfo.activities) {
-                // Get AOA info
-                AOA aoa = Class.forName(activityInfo.name).getAnnotation(AOA.class);
+                // Get AoaItem info
+                AoaItem aoa = Class.forName(activityInfo.name).getAnnotation(AoaItem.class);
                 // If activity's parent is this list activity class add to list
                 if (aoa.parent().equals(this.getClass().getName())) {
                     String name = activityInfo.name;
@@ -48,7 +48,7 @@ public class AOAListActivity extends ListActivity {
                     intent.setClass(this, Class.forName(name));
                     String title = aoa.title();
                     String description = aoa.description();
-                    activityList.add(new AOAItemInfo(intent, title, description));
+                    activityList.add(new AoaItemInfo(intent, title, description));
                 }
             }
         } catch (PackageManager.NameNotFoundException nameNotFoundException) {
@@ -56,12 +56,12 @@ public class AOAListActivity extends ListActivity {
         } catch (ClassNotFoundException classNotFoundException) {
             classNotFoundException.printStackTrace();
         }
-        Collections.sort(activityList, AOAItemInfo.TITLE_COMPARATOR);
+        Collections.sort(activityList, AoaItemInfo.TITLE_COMPARATOR);
         return activityList;
     }
 
     protected ListAdapter createListAdapter() {
-        final ArrayAdapter listAdapter = new ArrayAdapter<AOAItemInfo>(this, android.R.layout.two_line_list_item) {
+        final ArrayAdapter listAdapter = new ArrayAdapter<AoaItemInfo>(this, android.R.layout.two_line_list_item) {
 
             private LayoutInflater mInflater;
 
@@ -75,7 +75,7 @@ public class AOAListActivity extends ListActivity {
                 }
                 TextView titleTextView = (TextView)convertView.findViewById(android.R.id.text1);
                 TextView descTextView = (TextView)convertView.findViewById(android.R.id.text2);
-                AOAItemInfo item = getItem(position);
+                AoaItemInfo item = getItem(position);
                 titleTextView.setText(item.getTitle());
                 descTextView.setText(item.getDescription());
                 return convertView;
@@ -87,7 +87,7 @@ public class AOAListActivity extends ListActivity {
 
     @Override
     protected void onListItemClick(ListView listView, View view, int position, long id) {
-        AOAItemInfo item = (AOAItemInfo)listView.getItemAtPosition(position);
+        AoaItemInfo item = (AoaItemInfo)listView.getItemAtPosition(position);
         Intent intent = item.getIntent();
         startActivity(intent);
     }

@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface AOA {
+public @interface AoaItem {
     String parent() default "";
     String title() default "";
     String description() default "";

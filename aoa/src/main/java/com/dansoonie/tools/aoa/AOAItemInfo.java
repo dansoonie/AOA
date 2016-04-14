@@ -7,12 +7,12 @@ import java.util.Comparator;
 /**
  * Created by dansoonie on 4/13/16.
  */
-class AOAItemInfo {
+class AoaItemInfo {
     private Intent mIntent;
     private String mTitle;
     private String mDescription;
 
-    AOAItemInfo(Intent intent, String title, String description) {
+    AoaItemInfo(Intent intent, String title, String description) {
         mIntent = intent;
         mTitle = title;
         mDescription = description;
@@ -30,10 +30,10 @@ class AOAItemInfo {
         return mDescription;
     }
 
-    static final Comparator<AOAItemInfo> TITLE_COMPARATOR =
-            new Comparator<AOAItemInfo>() {
+    static final Comparator<AoaItemInfo> TITLE_COMPARATOR =
+            new Comparator<AoaItemInfo>() {
                 @Override
-                public int compare(AOAItemInfo item1, AOAItemInfo item2) {
+                public int compare(AoaItemInfo item1, AoaItemInfo item2) {
                     String title1 = (String) item1.getTitle();
                     String title2 = (String) item2.getTitle();
                     return title1.compareTo(title2);
