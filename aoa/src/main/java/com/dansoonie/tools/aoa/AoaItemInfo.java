@@ -30,9 +30,19 @@ class AoaItemInfo {
             new Comparator<AoaItemInfo>() {
                 @Override
                 public int compare(AoaItemInfo item1, AoaItemInfo item2) {
-                    String title1 = (String) item1.getTitle();
-                    String title2 = (String) item2.getTitle();
-                    return title1.compareTo(title2);
+                    if (item1.isListItem() == item2.isListItem()) {
+                        // if both AOA items same type
+                        // i.e. both list items or both not list items
+                        // just compare by title
+                        String title1 = (String) item1.getTitle();
+                        String title2 = (String) item2.getTitle();
+                        return title1.compareTo(title2);
+                    } else {
+                        // AOA items that are list have priority over non list items when ordering
+                        // So that lists appear first
+                        return item1.isListItem()? -1 : 1;
+                    }
+
                 }
             };
 }
