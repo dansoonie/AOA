@@ -1,42 +1,48 @@
 package com.dansoonie.tools.aoa;
 
-import android.content.Intent;
-
 import java.util.Comparator;
 
 /**
  * Created by dansoonie on 4/13/16.
  */
 class AoaItemInfo {
-    private Intent mIntent;
+    private Class mClass;
+    private boolean mIsList;
     private String mTitle;
     private String mDescription;
 
-    AoaItemInfo(Intent intent, String title, String description) {
-        mIntent = intent;
+    AoaItemInfo(Class clazz, String title, String description) {
+        mClass = clazz;
+        mIsList = AoaListActivity.class.isAssignableFrom(mClass);
         mTitle = title;
         mDescription = description;
     }
 
-    Intent getIntent() {
-        return mIntent;
-    }
+    Class getClazz() { return mClass; }
 
-    String getTitle() {
-        return mTitle;
-    }
+    boolean isListItem() { return mIsList; }
 
-    String getDescription() {
-        return mDescription;
-    }
+    String getTitle() { return mTitle; }
+
+    String getDescription() { return mDescription; }
 
     static final Comparator<AoaItemInfo> TITLE_COMPARATOR =
             new Comparator<AoaItemInfo>() {
                 @Override
                 public int compare(AoaItemInfo item1, AoaItemInfo item2) {
-                    String title1 = (String) item1.getTitle();
-                    String title2 = (String) item2.getTitle();
-                    return title1.compareTo(title2);
+                    if (item1.isListItem() == item2.isListItem()) {
+                        // if both AOA items same type
+                        // i.e. both list items or both not list items
+                        // just compare by title
+                        String title1 = (String) item1.getTitle();
+                        String title2 = (String) item2.getTitle();
+                        return title1.compareTo(title2);
+                    } else {
+                        // AOA items that are list have priority over non list items when ordering
+                        // So that lists appear first
+                        return item1.isListItem()? -1 : 1;
+                    }
+
                 }
             };
 }

@@ -13,7 +13,7 @@ import com.dansoonie.tools.aoa.AoaListActivity;
 public class ListB extends AoaListActivity {
     static final String AOA_PARENT = "com.dansoonie.tools.example.aoaexample.MainActivity";
     static final String AOA_TITLE = "List B";
-    static final String AOA_DESC = "Yet, another list in Root";
+    static final String AOA_DESC = "Another list in Root";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
