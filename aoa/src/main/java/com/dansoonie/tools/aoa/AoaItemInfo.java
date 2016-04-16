@@ -1,26 +1,24 @@
 package com.dansoonie.tools.aoa;
 
-import android.content.Intent;
-
 import java.util.Comparator;
 
 /**
  * Created by dansoonie on 4/13/16.
  */
 class AoaItemInfo {
-    private Intent mIntent;
+    private Class mClass;
+    private boolean mIsList;
     private String mTitle;
     private String mDescription;
 
-    AoaItemInfo(Intent intent, String title, String description) {
-        mIntent = intent;
+    AoaItemInfo(Class clazz, String title, String description) {
+        mClass = clazz;
+        mIsList = mClass.isAssignableFrom(AoaListActivity.class);
         mTitle = title;
         mDescription = description;
     }
 
-    Intent getIntent() {
-        return mIntent;
-    }
+    Class getClazz() { return mClass; }
 
     String getTitle() {
         return mTitle;

@@ -40,15 +40,14 @@ public class AoaListActivity extends ListActivity {
             PackageInfo pkgInfo = pkgManager.getPackageInfo(pkgName, PackageManager.GET_ACTIVITIES);
             for (ActivityInfo activityInfo : pkgInfo.activities) {
                 // Get AoaItem info
-                AoaItem aoa = Class.forName(activityInfo.name).getAnnotation(AoaItem.class);
-                // If activity's parent is this list activity class add to list
+                Class<?> clazz = Class.forName(activityInfo.name);
+                AoaItem aoa = clazz.getAnnotation(AoaItem.class);
+
+                // If activity's parent is this list activity add to list
                 if (aoa != null && getClass().getName().equals(aoa.parent())) {
-                    String name = activityInfo.name;
-                    Intent intent = new Intent();
-                    intent.setClass(this, Class.forName(name));
                     String title = aoa.title();
                     String description = aoa.description();
-                    activityList.add(new AoaItemInfo(intent, title, description));
+                    activityList.add(new AoaItemInfo(clazz, title, description));
                 }
             }
         } catch (PackageManager.NameNotFoundException nameNotFoundException) {
@@ -88,7 +87,7 @@ public class AoaListActivity extends ListActivity {
     @Override
     protected void onListItemClick(ListView listView, View view, int position, long id) {
         AoaItemInfo item = (AoaItemInfo)listView.getItemAtPosition(position);
-        Intent intent = item.getIntent();
+        Intent intent = new Intent(this, item.getClazz());
         startActivity(intent);
     }
 }
