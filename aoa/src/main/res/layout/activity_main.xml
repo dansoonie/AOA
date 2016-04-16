@@ -11,4 +11,29 @@
         android:layout_height="match_parent"
         android:fadeScrollbars="false" >
     </ListView>
+
+    <LinearLayout
+        android:id="@android:id/empty"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/imageView"
+            android:src="@android:drawable/presence_offline"
+            android:layout_gravity="center"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="List is Empty"
+            android:id="@+id/textView"/>
+    </LinearLayout>
+
+
 </RelativeLayout>

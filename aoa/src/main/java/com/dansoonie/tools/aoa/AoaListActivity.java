@@ -29,7 +29,8 @@ public class AoaListActivity extends ListActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        setListAdapter(createListAdapter());
+        List list = createActivityList();
+        setListAdapter(createListAdapter(list));
     }
 
     private List<AoaItemInfo> createActivityList() {
@@ -60,7 +61,7 @@ public class AoaListActivity extends ListActivity {
         return activityList;
     }
 
-    protected ListAdapter createListAdapter() {
+    protected ListAdapter createListAdapter(List list) {
         final ArrayAdapter listAdapter = new ArrayAdapter<AoaItemInfo>(this, R.layout.aoa_list_item) {
 
             private LayoutInflater mInflater;
@@ -88,7 +89,7 @@ public class AoaListActivity extends ListActivity {
                 return convertView;
             }
         };
-        listAdapter.addAll(createActivityList());
+        listAdapter.addAll(list);
         return listAdapter;
     }
 
