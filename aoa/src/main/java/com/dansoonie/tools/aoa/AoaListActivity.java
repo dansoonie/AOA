@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -60,7 +61,7 @@ public class AoaListActivity extends ListActivity {
     }
 
     protected ListAdapter createListAdapter() {
-        final ArrayAdapter listAdapter = new ArrayAdapter<AoaItemInfo>(this, android.R.layout.two_line_list_item) {
+        final ArrayAdapter listAdapter = new ArrayAdapter<AoaItemInfo>(this, R.layout.aoa_list_item) {
 
             private LayoutInflater mInflater;
 
@@ -70,11 +71,18 @@ public class AoaListActivity extends ListActivity {
                     if (mInflater == null) {
                         mInflater = getLayoutInflater();
                     }
-                    convertView = mInflater.inflate(android.R.layout.two_line_list_item, parent, false);
+                    convertView = mInflater.inflate(R.layout.aoa_list_item, parent, false);
                 }
-                TextView titleTextView = (TextView)convertView.findViewById(android.R.id.text1);
-                TextView descTextView = (TextView)convertView.findViewById(android.R.id.text2);
+                View itemRootView = (View)convertView.findViewById(R.id.item_root);
+                ImageView listIconImageView = (ImageView)convertView.findViewById(R.id.iv_list_icon);
+                TextView titleTextView = (TextView)convertView.findViewById(R.id.tv_title);
+                TextView descTextView = (TextView)convertView.findViewById(R.id.tv_desc);
                 AoaItemInfo item = getItem(position);
+                if (item.isListItem()) {
+                    listIconImageView.setVisibility(View.VISIBLE);
+                } else {
+                    listIconImageView.setVisibility(View.GONE);
+                }
                 titleTextView.setText(item.getTitle());
                 descTextView.setText(item.getDescription());
                 return convertView;

@@ -13,20 +13,18 @@ class AoaItemInfo {
 
     AoaItemInfo(Class clazz, String title, String description) {
         mClass = clazz;
-        mIsList = mClass.isAssignableFrom(AoaListActivity.class);
+        mIsList = AoaListActivity.class.isAssignableFrom(mClass);
         mTitle = title;
         mDescription = description;
     }
 
     Class getClazz() { return mClass; }
 
-    String getTitle() {
-        return mTitle;
-    }
+    boolean isListItem() { return mIsList; }
 
-    String getDescription() {
-        return mDescription;
-    }
+    String getTitle() { return mTitle; }
+
+    String getDescription() { return mDescription; }
 
     static final Comparator<AoaItemInfo> TITLE_COMPARATOR =
             new Comparator<AoaItemInfo>() {
