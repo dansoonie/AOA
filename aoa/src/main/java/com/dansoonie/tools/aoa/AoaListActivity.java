@@ -42,7 +42,7 @@ public class AoaListActivity extends ListActivity {
                 // Get AoaItem info
                 AoaItem aoa = Class.forName(activityInfo.name).getAnnotation(AoaItem.class);
                 // If activity's parent is this list activity class add to list
-                if (aoa.parent().equals(this.getClass().getName())) {
+                if (aoa != null && getClass().getName().equals(aoa.parent())) {
                     String name = activityInfo.name;
                     Intent intent = new Intent();
                     intent.setClass(this, Class.forName(name));
