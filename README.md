@@ -9,14 +9,10 @@ The best way to clarify things is to experiment. I tend to create a project to e
 I have been doing this for a while and tried to adopt a scheme that would make the task efficient.
 
 ## Characteristics and Features
-- Decentralized organization
-When seeing many Android projects that use some kind of list structure to organize Activities, you have to add something here and there when adding another Activity. AOA makes it possible to label where the Activity should be listed in the Activity class itself using annotation(s).
-
-- Performance is not an issue
-AOA was initially designed for testing so performance was not put into consideration. My first objective was to make the job of organizing list of activities easy and simple.
-
-- Multiple depths
-A list can have lists and your list structure can be organized into several depths.
+- Decentralized organization: When seeing many Android projects that use some kind of list structure to organize Activities, you have to add something here and there when adding another Activity. AOA makes it possible to label where the Activity should be listed in the Activity class itself using annotation(s).
+- Performance is not an issue: AOA was initially designed for testing so performance was not put into consideration. My first objective was to make the job of organizing list of activities easy and simple.
+- Multiple depths: A list can have lists and your list structure can be organized into several depths.
+- Minimal UI: Not much effort was put into UI but you can still distinguish list items and Activity items. Also, list items appear first in the list if any. 
 
 ## How to Use
 ### Understanding the entities
