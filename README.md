@@ -20,7 +20,6 @@ A list can have lists and your list structure can be organized into several dept
 
 ## How to Use
 ### Understanding the entities
-
 First take note of the following concept
 - AoaItem: Basically any Activity you wish to put in a list is an AoaItem.
 - AoaListActivity: The list that holds other Activities as items is an AoaListActivity.
@@ -39,9 +38,7 @@ public class RootListActivity extends AoaListActivity {
 ```
 
 ### Adding Acitivites to a List
-
 #### If it's just an Activity
-
 Create an Activity and add @AoaItem annotation in front of(or above) the class declaration. Add three parameters(parent, title, and description) to the annotation.
 * parent: The Class name of the AoaListActivity the Activity is part of
 * title: The title of your Activity which will appear in the list(parent)
@@ -63,4 +60,20 @@ public class ActivityOne extends Activity { // Extend and implement whatever cla
 ```
 
 #### If you want to add another list to a list
-Combine the previous two steps. If you cannot find out how, refer to the sample project in the repository
+Create an Activity and annotate @AoaItem and provide the information for parent, title, and description. Also, the class should extend AoaListActivity.
+For example, if you want to create a sub list in the root list with the name "Sub List"...
+```
+package com.dansoonie.example;
+
+// import statements
+
+@AoaItem (
+  parent = "com.dansoonie.example.RootListActivity",
+  title = "Sub List",
+  description = "Another list of other Activities"
+)
+public class SubList extends AoaListActivity { // Extend and implement whatever class and interfaces you need to
+  // Nothing really reqruied but if there is something(such as overridden onCreate method) you can leave it
+}
+```
+For more detailed use example, refer to the sample project in the repository
