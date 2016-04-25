@@ -15,6 +15,9 @@ I have been doing this for a while and tried to adopt a scheme that would make t
 - Minimal UI: Not much effort was put into UI but you can still distinguish list items and Activity items. Also, list items appear first in the list if any. 
 
 ## How to Use
+### Import library to your project
+You can clone this project and buid the aoa module to get the aar or just download the prebuilt aar from the release folder. Import aar file from the project you are trying to use AOA.
+
 ### Understanding the entities
 First take note of the following concept
 - AoaItem: Basically any Activity you wish to put in a list is an AoaItem.
