@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -28,7 +29,8 @@ public class AoaListActivity extends ListActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        setListAdapter(createListAdapter());
+        List list = createActivityList();
+        setListAdapter(createListAdapter(list));
     }
 
     private List<AoaItemInfo> createActivityList() {
@@ -40,15 +42,14 @@ public class AoaListActivity extends ListActivity {
             PackageInfo pkgInfo = pkgManager.getPackageInfo(pkgName, PackageManager.GET_ACTIVITIES);
             for (ActivityInfo activityInfo : pkgInfo.activities) {
                 // Get AoaItem info
-                AoaItem aoa = Class.forName(activityInfo.name).getAnnotation(AoaItem.class);
-                // If activity's parent is this list activity class add to list
+                Class<?> clazz = Class.forName(activityInfo.name);
+                AoaItem aoa = clazz.getAnnotation(AoaItem.class);
+
+                // If activity's parent is this list activity add to list
                 if (aoa != null && getClass().getName().equals(aoa.parent())) {
-                    String name = activityInfo.name;
-                    Intent intent = new Intent();
-                    intent.setClass(this, Class.forName(name));
                     String title = aoa.title();
                     String description = aoa.description();
-                    activityList.add(new AoaItemInfo(intent, title, description));
+                    activityList.add(new AoaItemInfo(clazz, title, description));
                 }
             }
         } catch (PackageManager.NameNotFoundException nameNotFoundException) {
@@ -60,8 +61,8 @@ public class AoaListActivity extends ListActivity {
         return activityList;
     }
 
-    protected ListAdapter createListAdapter() {
-        final ArrayAdapter listAdapter = new ArrayAdapter<AoaItemInfo>(this, android.R.layout.two_line_list_item) {
+    protected ListAdapter createListAdapter(List list) {
+        final ArrayAdapter listAdapter = new ArrayAdapter<AoaItemInfo>(this, R.layout.aoa_list_item) {
 
             private LayoutInflater mInflater;
 
@@ -71,24 +72,31 @@ public class AoaListActivity extends ListActivity {
                     if (mInflater == null) {
                         mInflater = getLayoutInflater();
                     }
-                    convertView = mInflater.inflate(android.R.layout.two_line_list_item, parent, false);
+                    convertView = mInflater.inflate(R.layout.aoa_list_item, parent, false);
                 }
-                TextView titleTextView = (TextView)convertView.findViewById(android.R.id.text1);
-                TextView descTextView = (TextView)convertView.findViewById(android.R.id.text2);
+                View itemRootView = (View)convertView.findViewById(R.id.item_root);
+                ImageView listIconImageView = (ImageView)convertView.findViewById(R.id.iv_list_icon);
+                TextView titleTextView = (TextView)convertView.findViewById(R.id.tv_title);
+                TextView descTextView = (TextView)convertView.findViewById(R.id.tv_desc);
                 AoaItemInfo item = getItem(position);
+                if (item.isListItem()) {
+                    listIconImageView.setVisibility(View.VISIBLE);
+                } else {
+                    listIconImageView.setVisibility(View.GONE);
+                }
                 titleTextView.setText(item.getTitle());
                 descTextView.setText(item.getDescription());
                 return convertView;
             }
         };
-        listAdapter.addAll(createActivityList());
+        listAdapter.addAll(list);
         return listAdapter;
     }
 
     @Override
     protected void onListItemClick(ListView listView, View view, int position, long id) {
         AoaItemInfo item = (AoaItemInfo)listView.getItemAtPosition(position);
-        Intent intent = item.getIntent();
+        Intent intent = new Intent(this, item.getClazz());
         startActivity(intent);
     }
 }

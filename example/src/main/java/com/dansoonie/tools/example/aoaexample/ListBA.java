@@ -9,9 +9,9 @@ import com.dansoonie.tools.aoa.AoaListActivity;
  * Created by dansoonie on 4/16/16.
  */
 @AoaItem(
-        parent = ListB.AOA_PARENT,
-        title = ListB.AOA_TITLE,
-        description = ListB.AOA_DESC
+        parent = ListBA.AOA_PARENT,
+        title = ListBA.AOA_TITLE,
+        description = ListBA.AOA_DESC
 )
 public class ListBA extends AoaListActivity {
     static final String AOA_PARENT = "com.dansoonie.tools.example.aoaexample.ListB";
